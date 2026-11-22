@@ -55,3 +55,15 @@ Names: `happy`, `blush`, `cry`, `rage`, `shock`, `smug`, `sleepy`, `love`, `hype
 Example: `That episode was wild :pa_shock: :pa_hype:`.
 
 The emotes are available in the **separate native community pages** while the original site's title-renderer integration remains outstanding. The current shared-UI module does not add custom comment-reaction counts beyond the existing like function. Future PimpAnime Hub profiles and badges can reuse these same emote assets.
+
+## User-provided PimpAnime symbol emotes (v0.3)
+
+The PimpAnime comment picker now includes **55** shortcodes: 36 chibi reaction faces plus **19 exact user-supplied SVG symbols**, preserved under `pimpanime-community/native/user-emotes/`. The category tabs are **All**, **Reactions**, and **PimpAnime Icons**. The supplied symbols are:
+
+`hd`, `bell`, `calendar`, `chat`, `controller`, `crown`, `dub`, `episode`, `flame`, `fox`, `headphones`, `manga`, `new`, `pause`, `pimp`, `pinkheart`, `play`, `popcorn`, and `ramen`.
+
+Examples: `:pa_ramen:`, `:pa_pinkheart:`, `:pa_fox:`. Existing `:pa_happy:` and other shortcodes remain supported.
+
+The Cloudflare UI Worker serves requested icons at `/community/native/emotes/{name}.svg` from the verified `GitRatio/anime-api` source and applies restrictive SVG response headers. The source SVGs were reviewed for scripts, event attributes, external resources, and foreign objects. They are used as `img` resources, not inserted as raw HTML. Keep the source paths and allowlist synchronized for future releases.
+
+The separate Discord ZIP includes additional PNG reaction artwork and six other SVG symbols; this v0.3 live integration covers the **19 individually attached SVGs**. The ZIP's PNG artwork is not claimed as deployed.
