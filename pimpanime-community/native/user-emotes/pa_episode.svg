@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs>
+<linearGradient id="purple" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4bfff"/><stop offset=".38" stop-color="#b75dff"/><stop offset="1" stop-color="#7040cb"/></linearGradient>
+<linearGradient id="pink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd3f5"/><stop offset=".45" stop-color="#ff6bc3"/><stop offset="1" stop-color="#da37a4"/></linearGradient>
+<linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7f7ff"/><stop offset=".55" stop-color="#63caff"/><stop offset="1" stop-color="#6e89f5"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5bc"/><stop offset=".52" stop-color="#ffd45b"/><stop offset="1" stop-color="#ff923c"/></linearGradient>
+<linearGradient id="ivory" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#ced1f2"/></linearGradient>
+<linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff08b"/><stop offset=".4" stop-color="#ff8c38"/><stop offset="1" stop-color="#fa3a88"/></linearGradient>
+<linearGradient id="lime" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e1ffdd"/><stop offset=".45" stop-color="#5cdda5"/><stop offset="1" stop-color="#39b6a8"/></linearGradient>
+<linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6556c4"/><stop offset=".5" stop-color="#343064"/><stop offset="1" stop-color="#252143"/></linearGradient>
+</defs><g stroke="#241a3f" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"><rect x="36" y="62" width="187" height="143" rx="19" fill="url(#purple)" stroke-width="9"/><path d="M36 76 L209 76 L220 44 L50 44 Z" fill="url(#blue)" stroke-width="9"/><path d="M83 44 L60 75 M135 44 L111 76 M191 44 L162 76" fill="none" stroke-width="10"/><polygon points="104,101 104,176 168,139" fill="url(#ivory)" stroke-width="9"/><polygon points="203,22 205.75,30.25 214,33 205.75,35.75 203,44 200.25,35.75 192,33 200.25,30.25" fill="url(#gold)" stroke-width="4"/></g></svg>
