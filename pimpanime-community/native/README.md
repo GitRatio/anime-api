@@ -45,3 +45,13 @@ Giscus remains at `/community/{type}/{id}`. Its configuration is in `../giscus.j
 The original `pimpanime` production Worker has not been overwritten. Native UI and API routes are separately deployed to avoid disturbing the original Cloudflare Static Assets binding. The native comments interface is not yet automatically mounted inside the existing catalogue/title detail pages. Browser acceptance from this session was blocked by Cloudflare Browser Rendering rate limits and external bot restrictions.
 
 Worker source in this directory is a versioned source backup; changes should be reviewed and deployed with a reproducible pipeline, never by copying partial/truncated API output.
+
+## PimpAnime chibi emotes (v0.2)
+
+The native composer has a Discord-style **Anime emotes** button, search box, and responsive 12-emote grid. All assets are original SVGs, served by the native UI Worker under `/community/native/emotes/{name}.svg`, with no third-party image requests. Selected emotes insert a ` :pa_name: ` shortcode into the comment. Rendering is safely DOM-based, so other content remains ordinary text and is not interpreted as HTML. Spoiler-protected comments reveal their emotes only when opened.
+
+Names: `happy`, `blush`, `cry`, `rage`, `shock`, `smug`, `sleepy`, `love`, `hype`, `bonk`, `sus`, and `laugh`.
+
+Example: `That episode was wild :pa_shock: :pa_hype:`.
+
+The emotes are available in the **separate native community pages** while the original site's title-renderer integration remains outstanding. The current shared-UI module does not add custom comment-reaction counts beyond the existing like function. Future PimpAnime Hub profiles and badges can reuse these same emote assets.
