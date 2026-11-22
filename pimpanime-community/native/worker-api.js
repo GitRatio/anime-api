@@ -81,4 +81,37 @@ export default {async fetch(req,env){
     if(await limited(db,'login:'+ipkey,12,900))return json({error:'Too many login attempts'},429);
     const email=safe(b.email,254).toLowerCase(),pass=String(b.password||'');if(!email||pass.length>128)return json({error:'Invalid credentials'},401);
     const row=await db.prepare('SELECT * FROM users WHERE email=? AND password_salt IS NOT NULL').bind(email).first();
-    const actual=await passhash(pass,row?.password_ --- TRUNCATED --- 14,574 chars
+    const actual=await passhash(pass,row?.password_salt||'00000000000000000000000000000000');
+    if(!row||actual!==row.password_hash)return json({error:'Invalid credentials'},401);
+    return signIn(db,row);
+  }
+  const me=await user(req,db);
+  if(path==='logout'){const token=(req.headers.get('cookie')||'').match(/(?:^|;\s*)pa_session=([0-9a-f]{64})(?:;|$)/)?.[1];if(token)await db.prepare('DELETE FROM sessions WHERE token_hash=?').bind(await sha(token)).run();return json({ok:true},200,removeCookie)}
+  if(!me)return json({error:'Sign in to continue'},401);
+  if(path==='post'){
+    if(await limited(db,'post:'+me.id,20,3600))return json({error:'Posting limit reached'},429);
+    const kind=safe(b.kind,12),title=safe(b.id,70),body=safe(b.body,5000),parent=safe(b.parentId,70);
+    if(!kindOk(kind)||!idOk(title)||body.length<2||body.length>3000||/[\u0000-\u0008\u000b\u000e-\u001f]/.test(body))return json({error:'Invalid comment'},400);
+    if(parent){const p=await db.prepare("SELECT id FROM comments WHERE id=? AND kind=? AND title_id=? AND status='visible'").bind(parent,kind,title).first();if(!p)return json({error:'Reply target unavailable'},400)}
+    const id=crypto.randomUUID();await db.prepare('INSERT INTO comments(id,kind,title_id,user_id,parent_id,body,spoiler) VALUES(?,?,?,?,?,?,?)').bind(id,kind,title,me.id,parent||null,body,b.spoiler?1:0).run();return json({ok:true,id},201);
+  }
+  if(path==='react'){
+    const id=safe(b.commentId,60);if(!idOk(id))return json({error:'Invalid comment'},400);
+    const item=await db.prepare("SELECT id FROM comments WHERE id=? AND status='visible'").bind(id).first();if(!item)return json({error:'Comment missing'},404);
+    if(b.like===false)await db.prepare('DELETE FROM reactions WHERE comment_id=? AND user_id=?').bind(id,me.id).run();
+    else await db.prepare("INSERT OR IGNORE INTO reactions(comment_id,user_id) VALUES(?,?)").bind(id,me.id).run();
+    return json({ok:true});
+  }
+  if(path==='report'){
+    const id=safe(b.commentId,60),reason=safe(b.reason,400);if(!idOk(id)||reason.length<5)return json({error:'Invalid report'},400);
+    const item=await db.prepare("SELECT id FROM comments WHERE id=? AND status='visible'").bind(id).first();if(!item)return json({error:'Comment missing'},404);
+    await db.prepare('INSERT OR IGNORE INTO reports(comment_id,user_id,reason) VALUES(?,?,?)').bind(id,me.id,reason).run();return json({ok:true});
+  }
+  if(path==='hide'){
+    if(me.role!=='admin'&&me.role!=='moderator')return json({error:'Moderator required'},403);
+    const id=safe(b.commentId,60);if(!idOk(id))return json({error:'Invalid comment'},400);
+    await db.prepare("UPDATE comments SET status='hidden',updated_at=unixepoch() WHERE id=?").bind(id).run();return json({ok:true});
+  }
+  return json({error:'Not found'},404)
+}};
+
