@@ -61,7 +61,7 @@ export default {async fetch(req,env){
   if(path==='me'&&req.method==='GET'){const u=await user(req,db);return json({user:u||null,emailRegistration:!!env.TURNSTILE_SECRET,googleLogin:!!(env.GOOGLE_CLIENT_ID&&env.GOOGLE_CLIENT_SECRET),turnstileSiteKey:'0x4AAAAAAGNVHOBeibCrdSE1'})}
   if(path==='comments'&&req.method==='GET'){
     const kind=url.searchParams.get('kind'),title=url.searchParams.get('id');if(!kindOk(kind)||!idOk(title))return json({error:'Invalid title'},400);
-    const cursor=Math.max(0,Math.min(9999999999,Number(url.searchParams.get('before')||0)||0));const page=await db.prepare("SELECT c.id,c.parent_id,c.body,c.spoiler,c.created_at,u.display_name,u.avatar_url,(SELECT count(*) FROM reactions r WHERE r.comment_id=c.id) likes FROM comments c JOIN users u ON u.id=c.user_id WHERE c.kind=? AND c.title_id=? AND c.status='visible' AND (?=0 OR c.created_at<?) ORDER BY c.created_at DESC LIMIT 31").bind(kind,title,cursor,cursor).all();const items=(page.results||[]).slice(0,30);return json({comments:items,hasMore:(page.results||[]).length>30,nextBefore:items.length?items[items.length-1].created_at:null})}
+    const cursor=Math.max(0,Math.min(9999999999,Number(url.searchParams.get('before')||0)||0));const page=await db.prepare("SELECT c.id,c.parent_id,c.user_id AS author_id,c.body,c.spoiler,c.created_at,u.display_name,u.avatar_url,(SELECT count(*) FROM reactions r WHERE r.comment_id=c.id) likes FROM comments c JOIN users u ON u.id=c.user_id WHERE c.kind=? AND c.title_id=? AND c.status='visible' AND (?=0 OR c.created_at<?) ORDER BY c.created_at DESC LIMIT 31").bind(kind,title,cursor,cursor).all();const items=(page.results||[]).slice(0,30);return json({comments:items,hasMore:(page.results||[]).length>30,nextBefore:items.length?items[items.length-1].created_at:null})}
   if(req.method!=='POST')return json({error:'Not found'},404);
   if(!guard(req))return json({error:'Invalid request origin'},403);
   const ip=req.headers.get('cf-connecting-ip')||'unknown',ipkey=await sha(ip);
@@ -95,6 +95,17 @@ export default {async fetch(req,env){
     if(parent){const p=await db.prepare("SELECT id FROM comments WHERE id=? AND kind=? AND title_id=? AND status='visible'").bind(parent,kind,title).first();if(!p)return json({error:'Reply target unavailable'},400)}
     const id=crypto.randomUUID();await db.prepare('INSERT INTO comments(id,kind,title_id,user_id,parent_id,body,spoiler) VALUES(?,?,?,?,?,?,?)').bind(id,kind,title,me.id,parent||null,body,b.spoiler?1:0).run();return json({ok:true,id},201);
   }
+  if(path==='edit'||path==='delete'){
+ const id=safe(b.commentId,70);if(!idOk(id))return json({error:'Invalid comment identifier'},400);
+ const row=await db.prepare("SELECT user_id,status,created_at FROM comments WHERE id=?").bind(id).first();
+ if(!row||row.status!=='visible')return json({error:'Comment not found'},404);
+ if(row.user_id!==me.id&&me.role!=='admin'&&me.role!=='moderator')return json({error:'Not permitted'},403);
+ if(path==='delete'){await db.prepare("UPDATE comments SET status='hidden',updated_at=unixepoch() WHERE id=? AND status='visible'").bind(id).run();return json({ok:true})}
+ if(row.user_id!==me.id)return json({error:'Editing another account is not allowed'},403);
+ const body=safe(b.body,5000);if(body.length<2||body.length>3000||/[\u0000-\u0008\u000b\u000e-\u001f]/.test(body))return json({error:'Invalid comment'},400);
+ if(Math.floor(Date.now()/1000)-row.created_at>86400)return json({error:'Editing is available for 24 hours'},403);
+ await db.prepare('UPDATE comments SET body=?,spoiler=?,updated_at=unixepoch() WHERE id=? AND user_id=?').bind(body,b.spoiler?1:0,id,me.id).run();return json({ok:true})
+}
   if(path==='react'){
     const id=safe(b.commentId,60);if(!idOk(id))return json({error:'Invalid comment'},400);
     const item=await db.prepare("SELECT id FROM comments WHERE id=? AND status='visible'").bind(id).first();if(!item)return json({error:'Comment missing'},404);
