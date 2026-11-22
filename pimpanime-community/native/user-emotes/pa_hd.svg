@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs>
+<linearGradient id="purple" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4bfff"/><stop offset=".38" stop-color="#b75dff"/><stop offset="1" stop-color="#7040cb"/></linearGradient>
+<linearGradient id="pink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd3f5"/><stop offset=".45" stop-color="#ff6bc3"/><stop offset="1" stop-color="#da37a4"/></linearGradient>
+<linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7f7ff"/><stop offset=".55" stop-color="#63caff"/><stop offset="1" stop-color="#6e89f5"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5bc"/><stop offset=".52" stop-color="#ffd45b"/><stop offset="1" stop-color="#ff923c"/></linearGradient>
+<linearGradient id="ivory" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#ced1f2"/></linearGradient>
+<linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff08b"/><stop offset=".4" stop-color="#ff8c38"/><stop offset="1" stop-color="#fa3a88"/></linearGradient>
+<linearGradient id="lime" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e1ffdd"/><stop offset=".45" stop-color="#5cdda5"/><stop offset="1" stop-color="#39b6a8"/></linearGradient>
+<linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6556c4"/><stop offset=".5" stop-color="#343064"/><stop offset="1" stop-color="#252143"/></linearGradient>
+</defs><g stroke="#241a3f" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"><rect x="25" y="58" width="206" height="151" rx="22" fill="url(#night)" stroke-width="9"/><rect x="39" y="71" width="178" height="118" rx="13" fill="url(#purple)" stroke-width="5"/><text x="128" y="157" text-anchor="middle" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="91" fill="#fff" stroke="#241a3f" stroke-width="3" paint-order="stroke">HD</text><polygon points="204,41 207.25,50.75 217,54 207.25,57.25 204,67 200.75,57.25 191,54 200.75,50.75" fill="url(#gold)" stroke-width="4"/></g></svg>

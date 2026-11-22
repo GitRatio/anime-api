@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs>
+<linearGradient id="purple" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4bfff"/><stop offset=".38" stop-color="#b75dff"/><stop offset="1" stop-color="#7040cb"/></linearGradient>
+<linearGradient id="pink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd3f5"/><stop offset=".45" stop-color="#ff6bc3"/><stop offset="1" stop-color="#da37a4"/></linearGradient>
+<linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7f7ff"/><stop offset=".55" stop-color="#63caff"/><stop offset="1" stop-color="#6e89f5"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5bc"/><stop offset=".52" stop-color="#ffd45b"/><stop offset="1" stop-color="#ff923c"/></linearGradient>
+<linearGradient id="ivory" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#ced1f2"/></linearGradient>
+<linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff08b"/><stop offset=".4" stop-color="#ff8c38"/><stop offset="1" stop-color="#fa3a88"/></linearGradient>
+<linearGradient id="lime" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e1ffdd"/><stop offset=".45" stop-color="#5cdda5"/><stop offset="1" stop-color="#39b6a8"/></linearGradient>
+<linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6556c4"/><stop offset=".5" stop-color="#343064"/><stop offset="1" stop-color="#252143"/></linearGradient>
+</defs><g stroke="#241a3f" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"><polygon points="39,174 35,77 92,120 127,44 166,120 221,77 214,174" fill="url(#gold)" stroke-width="9"/><rect x="43" y="169" width="169" height="38" rx="10" fill="url(#pink)" stroke-width="9"/><circle cx="36" cy="74" r="10" fill="url(#purple)" stroke-width="4"/><circle cx="128" cy="40" r="10" fill="url(#blue)" stroke-width="4"/><circle cx="220" cy="74" r="10" fill="url(#purple)" stroke-width="4"/><polygon points="201,45 203.75,53.25 212,56 203.75,58.75 201,67 198.25,58.75 190,56 198.25,53.25" fill="url(#gold)" stroke-width="4"/></g></svg>
