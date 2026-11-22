@@ -27,12 +27,12 @@ function addDock(){
  a.setAttribute("aria-label","Open PimpAnime community");
  dock.append(a);document.body.append(dock);
 }
-function update(){const a=document.getElementById("pa27Discuss");if(a){const url=target();a.href=url;const title=url===HUB?"Open PimpAnime community":"Discuss this title";a.setAttribute("aria-label",title);a.querySelector("span").textContent=url===HUB?"Community":"Discuss title";}}
+function update(){const a=document.getElementById("pa27Discuss");if(a){const url=target();if(a.getAttribute("href")!==url)a.setAttribute("href",url);const title=url===HUB?"Open PimpAnime community":"Discuss this title";if(a.getAttribute("aria-label")!==title)a.setAttribute("aria-label",title);const label=url===HUB?"Community":"Discuss title";const span=a.querySelector("span");if(span&&span.textContent!==label)span.textContent=label;}}
 function boot(){addDock();update();if(!document.getElementById("pa27Footer")){const footer=document.createElement("div");footer.id="pa27Footer";footer.className="pa27-footer";footer.innerHTML='Join the conversation in <a href="/community/hub">PimpAnime Community</a> · Made for anime fans';const anchor=document.querySelector("footer");if(anchor)anchor.append(footer);}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
 const origPush=history.pushState.bind(history),origReplace=history.replaceState.bind(history);
 history.pushState=function(...args){const result=origPush(...args);queueMicrotask(update);return result};
 history.replaceState=function(...args){const result=origReplace(...args);queueMicrotask(update);return result};
 window.addEventListener("popstate",update);window.addEventListener("hashchange",update);
-new MutationObserver(()=>{if(!document.getElementById("pa27Dock")&&document.body)addDock();update();}).observe(document.documentElement,{childList:true,subtree:true});
+let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;queueMicrotask(()=>{pending=false;if(!document.getElementById("pa27Dock")&&document.body)addDock();update()})}).observe(document.documentElement,{childList:true,subtree:true});
 })();
