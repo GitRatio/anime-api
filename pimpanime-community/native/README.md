@@ -9,7 +9,7 @@ The native comments system is isolated from the existing PimpAnime catalogue/pla
 - API: `/api/native-comments/health`
 - API: `/api/native-comments/me`
 - API: `/api/native-comments/comments?kind=anime&id=21`
-- POST: `register`, `login`, `logout`, `post`, `react`, `report`, `hide`
+- POST: `register`, `login`, `logout`, `post`, `react`, `report`, `hide`, `edit`, `delete`
 - Google OAuth: `/api/native-comments/google/start` and `/api/native-comments/google/callback`
 
 The Google OAuth implementation validates state, nonce, identity-token audience, expiry, and signature against Google's JWKS. Email/password registration uses PBKDF2-SHA256 and Cloudflare Turnstile. HTTP-only Secure SameSite cookies are used for sessions.
@@ -28,7 +28,7 @@ Email verification, password-reset email delivery, and robust moderation dashboa
 
 ## Moderation
 
-The API supports comment reporting and moderator hiding. It currently has no UI for assigning moderators. After creating the owner's account, a trusted database administrator can set its role in D1:
+The API supports comment reporting and moderator hiding. Native visitors can reply to comments and edit their own comments within 24 hours or delete them. Moderator/admin users can hide comments. Deleted comments are soft-hidden in D1, not erased. It currently has no UI for assigning moderators. After creating the owner's account, a trusted database administrator can set its role in D1:
 
 ```sql
 UPDATE users SET role = 'admin' WHERE email = 'your-verified-admin-email@example.com';
